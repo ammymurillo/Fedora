@@ -1,0 +1,288 @@
+
+
+/* ---------- utilidades de easing ---------- */
+:root{
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-in-out: cubic-bezier(.65,0,.35,1);
+}
+
+/* =========================================================
+   BOOT OVERLAY — intro tipo terminal
+   ========================================================= */
+.boot-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(82,103,125,.35), transparent 55%),
+    linear-gradient(160deg, var(--deepnavy) 0%, var(--midnight) 100%);
+  transition: opacity .6s var(--ease-in-out), visibility .6s var(--ease-in-out);
+}
+.boot-overlay.is-done{
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+body.is-booting{ overflow: hidden; }
+
+.boot-terminal{
+  font-family: var(--font-mono);
+  font-size: clamp(.85rem, 2vw, 1.05rem);
+  color: var(--ivory);
+  min-width: 280px;
+}
+.boot-line{
+  position: relative;
+  margin: 0 0 10px;
+  min-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgba(255,255,255,.9);
+}
+.boot-line::before{
+  content: '$ ';
+  color: var(--cream);
+}
+.boot-line .boot-cursor{
+  display: inline-block;
+  width: .55em;
+  height: 1.05em;
+  background: var(--cream);
+  margin-left: 2px;
+  vertical-align: -2px;
+  animation: bootBlink 1s step-end infinite;
+}
+@keyframes bootBlink{
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* =========================================================
+   SCROLL PROGRESS BAR
+   ========================================================= */
+.progress-bar{
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.progress-bar__fill{
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--midnight), var(--dusty), var(--deepnavy));
+  transform-origin: left;
+  transition: width .1s linear;
+}
+
+/* =========================================================
+   HERO — entrada escalonada
+   ========================================================= */
+.reveal-on-load{ opacity: 1; }
+.reveal-on-load > *{
+  opacity: 0;
+  transform: translateY(22px);
+}
+.reveal-on-load.is-revealed > *{
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+}
+.reveal-on-load.is-revealed > *:nth-child(1){ transition-delay: .05s; }
+.reveal-on-load.is-revealed > *:nth-child(2){ transition-delay: .16s; }
+.reveal-on-load.is-revealed > *:nth-child(3){ transition-delay: .27s; }
+.reveal-on-load.is-revealed > *:nth-child(4){ transition-delay: .38s; }
+.reveal-on-load.is-revealed > *:nth-child(5){ transition-delay: .48s; }
+
+/* leve deriva ambiental del fondo del hero */
+.hero__bg, .f1-hero__bg{
+  background-size: 140% 140%;
+  animation: bgDrift 22s ease-in-out infinite alternate;
+}
+@keyframes bgDrift{
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 30%; }
+}
+
+@keyframes scrollcue{
+  0%   { transform: translateY(0);   opacity: 1; }
+  60%  { opacity: .3; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+/* =========================================================
+   SCROLL REVEAL genérico
+   ========================================================= */
+.reveal{
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal--scale{ transform: translateY(18px) scale(.96); }
+.reveal--scale.is-visible{ transform: translateY(0) scale(1); }
+
+/* =========================================================
+   NAV — sombra al hacer scroll + menú móvil
+   ========================================================= */
+.topnav{
+  transition: box-shadow .3s ease, background-color .3s ease;
+}
+.topnav.is-scrolled{
+  box-shadow: 0 6px 24px rgba(15,26,43,.08);
+}
+.topnav__toggle span{
+  transition: transform .28s var(--ease-in-out), opacity .2s ease;
+}
+.topnav__toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.topnav__toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+.topnav__toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* =========================================================
+   TABS + PANELES — cross-fade
+   ========================================================= */
+.tab{ position: relative; overflow: hidden; }
+.tab::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+  transform: scale(.9);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+}
+.tab:hover:not(.is-active)::after{ opacity: .05; transform: scale(1); }
+
+.panel{
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
+}
+.panel.is-active.panel--entered{
+  opacity: 1;
+  transform: translateY(0);
+}
+.panel.panel--leaving{
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* =========================================================
+   TIMELINE — línea que se dibuja + nodos activos
+   ========================================================= */
+.timeline__track{ background: var(--border); }
+.timeline__fill{
+  position: absolute;
+  left: 27px;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(var(--midnight), var(--dusty), var(--deepnavy));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .12s linear;
+}
+@media (max-width: 560px){
+  .timeline__fill{ left: 19px; }
+}
+
+.tl-node{ transition: transform .3s var(--ease-out), box-shadow .3s ease; }
+.tl-node::before{
+  content:'';
+  position:absolute; inset:-6px;
+  border-radius:50%;
+  border:2px solid currentColor;
+  opacity:0;
+  transform:scale(.7);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.tl-item--v1 .tl-node{ color: var(--midnight); }
+.tl-item--v20 .tl-node{ color: var(--dusty); }
+.tl-item--v40 .tl-node{ color: var(--deepnavy); }
+.tl-item.is-active .tl-node::before{ opacity: .45; transform: scale(1); }
+.tl-item.is-active .tl-node{ transform: scale(1.1); box-shadow: var(--shadow-2); }
+.tl-node:active{ transform: scale(.94); }
+
+.tl-node[aria-expanded="true"]::after{
+  content:'';
+  position:absolute; inset:0; border-radius:50%;
+  animation: nodePulse .6s var(--ease-out);
+}
+@keyframes nodePulse{
+  0%   { box-shadow: 0 0 0 0 rgba(28,46,74,.35); }
+  100% { box-shadow: 0 0 0 18px rgba(28,46,74,0); }
+}
+
+.tl-body{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s var(--ease-in-out);
+}
+.tl-item.is-open .tl-body{ max-height: 600px; }
+.tl-toggle{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--midnight);
+  padding: 0;
+}
+.tl-toggle__icon{
+  display: inline-block;
+  transition: transform .3s var(--ease-in-out);
+}
+.tl-item.is-open .tl-toggle__icon{ transform: rotate(180deg); }
+
+/* =========================================================
+   FEDORA 1 — acordeón de limitaciones (icono ya rotado en fedora1.css)
+   ========================================================= */
+.f1-limit__q{ transition: background-color .2s ease; }
+.f1-limit__q:hover{ background: rgba(28,46,74,.03); }
+
+/* =========================================================
+   CARDS / CHIPS — hover sutil
+   ========================================================= */
+.f1-card, .card, .tl-card, .app, .f1-app{
+  transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out);
+}
+.f1-card:hover, .f1-app:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+
+.chip-list li{ transition: transform .2s ease, background-color .2s ease; }
+.chip-list li:hover{ transform: translateY(-2px); }
+
+.btn{ will-change: transform; }
+
+/* =========================================================
+   TABLA COMPARATIVA — realce de fila en foco
+   ========================================================= */
+.compare-table tbody tr{ transition: background-color .2s ease; }
+
+/* =========================================================
+   Reduced motion: fallback duro para navegadores viejos
+   ========================================================= */
+@media (prefers-reduced-motion: reduce){
+  .boot-overlay{ display: none; }
+  .reveal, .reveal-on-load > *{ opacity: 1 !important; transform: none !important; }
+  .timeline__fill{ transform: scaleY(1) !important; }
+}

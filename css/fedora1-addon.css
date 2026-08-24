@@ -1,0 +1,56 @@
+
+
+.panel--v1 .panel__lede {
+  font-size: 1.02rem;
+  color: var(--text-dim);
+  margin: 0 0 22px;
+  max-width: 56ch;
+}
+
+.panel--v1 .fact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 28px;
+}
+
+.panel--v1 .fact-list li {
+  padding: 12px 16px;
+  border-left: 3px solid var(--midnight);
+  background: rgba(28, 46, 74, .06);
+  border-radius: var(--radius-sm);
+  font-size: .94rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.panel--v1 .fact-list strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--midnight);
+  margin-bottom: 2px;
+}
+
+.btn--v1-detail {
+  background: var(--midnight);
+  color: #fff;
+}
+.btn--v1-detail:hover {
+  transform: translateY(-2px);
+  background: #223755;
+}
+
+
+.tl-more {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--midnight);
+  text-decoration: none;
+}
+.tl-more:hover { text-decoration: underline; }
