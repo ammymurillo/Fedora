@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fedora Linux · De Yarrow a la vanguardia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/fedora1-addon.css">
+
+<style>
+/* ===== VISTA PREVIA LÍNEA DE TIEMPO ===== */
+.timeline-preview {
+  background: linear-gradient(180deg, #0b0c10 0%, #0f111a 100%);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.preview-card {
+  display: block;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.preview-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.preview-card--v1::before { background: radial-gradient(circle at 100% 0%, rgba(59,130,246,0.12), transparent 60%); }
+.preview-card--v20::before { background: radial-gradient(circle at 100% 0%, rgba(168,85,247,0.12), transparent 60%); }
+.preview-card--v40::before { background: radial-gradient(circle at 100% 0%, rgba(34,197,94,0.12), transparent 60%); }
+.preview-card:hover::before { opacity: 1; }
+.preview-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+}
+.preview-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: .55;
+  display: block;
+  margin-bottom: .6rem;
+}
+.preview-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 .5rem;
+  line-height: 1.2;
+}
+.preview-card h3 em {
+  font-style: normal;
+  opacity: .65;
+  font-weight: 500;
+}
+.preview-card p {
+  font-family: 'Inter', sans-serif;
+  font-size: .95rem;
+  line-height: 1.5;
+  opacity: .75;
+  margin: 0;
+}
+.preview-cta {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding-bottom: 1rem;
+}
+.preview-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+@media (max-width: 768px) {
+  .preview-grid { grid-template-columns: 1fr; max-width: 420px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ===================== CURSOR / BOOT OVERLAY ===================== -->
+<div class="boot-overlay" id="bootOverlay" aria-hidden="true">
+  <div class="boot-terminal">
+    <p class="boot-line" data-text="iniciando fedora-linux-history.sh"></p>
+    <p class="boot-line" data-text="cargando versiones: 1, 20, 40 ..."></p>
+    <p class="boot-line" data-text="listo."></p>
+  </div>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<header class="topnav" id="topnav">
+  <div class="topnav__inner">
+    <a href="#inicio" class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="28" height="28">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.4" opacity="0.35"/>
+          <path d="M24 8 A16 16 0 0 1 24 40" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="24" cy="24" r="5" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand__text">fedora<span class="brand__dim">.evolución</span></span>
+    </a>
+    <nav class="topnav__links">
+      <a href="#versiones">Versiones</a>
+      <a href="#comparativa">Comparativa</a>
+      <a href="#linea-tiempo">Línea de tiempo</a>
+    </nav>
+    <button class="topnav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="inicio">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__content reveal-on-load">
+    <p class="eyebrow eyebrow--terminal"><span class="eyebrow__prompt">$</span> cat /etc/fedora-release</p>
+    <h1 class="hero__title">
+      De <span class="hl hl--v1">Yarrow</span> a la
+      <span class="hl hl--v40">vanguardia</span>
+    </h1>
+    <p class="hero__subtitle">
+      21 años de decisiones técnicas que moldearon la forma en que miles de desarrolladores
+      instalan, compilan, aseguran y distribuyen software. Un recorrido por tres versiones
+      clave de Fedora Linux — <strong>1</strong>, <strong>20</strong> y <strong>40</strong> —
+      y lo que cada una cambió para siempre.
+    </p>
+    <div class="hero__cta">
+      <a href="#versiones" class="btn btn--primary">Explorar versiones</a>
+      <a href="#linea-tiempo" class="btn btn--ghost">Ver línea de tiempo</a>
+    </div>
+  </div>
+  <div class="hero__scrollcue" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- ===================== VERSIONES ===================== -->
+<section class="section versions" id="versiones">
+  <div class="section__head">
+    <p class="eyebrow">Actividad 1</p>
+    <h2 class="section__title">Tres momentos, un mismo proyecto</h2>
+    <p class="section__desc">
+      Cada versión tiene su propia identidad visual y técnica. Selecciona una pestaña para
+      ver su interfaz, sus herramientas de desarrollo y sus límites.
+    </p>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Versiones de Fedora">
+    <button class="tab tab--v1 is-active" role="tab" aria-selected="true" aria-controls="panel-v1" id="tab-v1" data-version="v1">
+      <span class="tab__num">01</span>
+      <span class="tab__name">Fedora 1</span>
+      <span class="tab__code">"Yarrow"</span>
+    </button>
+    <button class="tab tab--v20" role="tab" aria-selected="false" aria-controls="panel-v20" id="tab-v20" data-version="v20">
+      <span class="tab__num">02</span>
+      <span class="tab__name">Fedora 20</span>
+      <span class="tab__code">"Heisenbug"</span>
+    </button>
+    <button class="tab tab--v40" role="tab" aria-selected="false" aria-controls="panel-v40" id="tab-v40" data-version="v40">
+      <span class="tab__num">03</span>
+      <span class="tab__name">Fedora 40</span>
+      <span class="tab__code">Sin nombre en código</span>
+    </button>
+  </div>
+
+  <!-- PANEL FEDORA 1 -->
+  <article class="panel panel--v1 is-active" id="panel-v1" role="tabpanel" aria-labelledby="tab-v1">
+    <div class="panel__grid">
+      <div class="panel__visual">
+        <div class="mockwin mockwin--v1" aria-hidden="true">
+          <div class="mockwin__bar">
+            <span></span><span></span><span></span>
+            <em>Fedora Project — Mozilla</em>
+          </div>
+          <div class="mockwin__body mockwin__body--v1">
+            <div class="mockwin__panel">Home · Download · Docs · Release&nbsp;Notes</div>
+            <div class="mockwin__text">
+              <strong>Fedora Core 1 Release Notes</strong>
+              <span>GNOME 2.4 · KDE 3.1 · YUM</span>
+            </div>
+          </div>
+        </div>
+        <img class="panel__screenshot" src="assets/fedora1-screenshot.png" alt="Escritorio de Fedora Core 1 mostrando el navegador con las notas de la versión">
+        <figcaption class="panel__caption">Captura real del escritorio de Fedora Core 1: menú de aplicaciones sencillo y navegador Mozilla.</figcaption>
+      </div>
+
+      <div class="panel__info">
+        <div class="version-meta">
+          <span class="version-meta__year">2003</span>
+          <span class="version-meta__date">6 de noviembre de 2003</span>
+        </div>
+
+        <p class="panel__lede">
+          La primera Fedora tras la reorganización de Red Hat: interfaz sencilla pensada
+          para hardware modesto, y el debut de <strong>YUM</strong> como gestor de paquetes
+          con resolución automática de dependencias.
+        </p>
+
+        <ul class="fact-list">
+          <li><strong>Base técnica</strong> — Kernel Linux 2.4.19, GNOME 2.4 / KDE 3.1, tema Bluecurve.</li>
+          <li><strong>Mayor salto</strong> — YUM + RPM y NPTL (hilos POSIX nativos) reemplazan la gestión manual de dependencias.</li>
+          <li><strong>Primeros pasos en seguridad</strong> — Exec-shield y PIE aleatorizan memoria; SELinux aún no existía.</li>
+          <li><strong>Limitación clave</strong> — Sin códecs multimedia por patentes, soporte oficial de menos de un año.</li>
+        </ul>
+
+        <a class="btn btn--v1-detail" href="fedora1.html">
+          Ver ficha completa de Fedora 1 <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- PANEL FEDORA 20 -->
+  <article class="panel panel--v20" id="panel-v20" role="tabpanel" aria-labelledby="tab-v20" hidden>
+    <div class="panel__grid">
+      <div class="panel__visual">
+        <div class="mockwin mockwin--v20" aria-hidden="true">
+          <div class="mockwin__bar mockwin__bar--v20">
+            <span class="mockwin__headerbar">Actividades</span>
+          </div>
+          <div class="mockwin__body mockwin__body--v20">
+            <div class="mockwin__tile">gnome-music</div>
+            <div class="mockwin__tile">gnome-maps</div>
+            <div class="mockwin__tile">Software</div>
+            <div class="mockwin__tile">Terminal</div>
+          </div>
+        </div>
+        <figcaption class="panel__caption">Recreación de la barra de cabecera («header bar») introducida por GNOME 3.10, que fusiona título y barra de herramientas.</figcaption>
+      </div>
+
+      <div class="panel__info">
+        <div class="version-meta">
+          <span class="version-meta__year">2013</span>
+          <span class="version-meta__date">17 de diciembre de 2013 · 10º aniversario de Fedora</span>
+        </div>
+        <h3>Interfaz gráfica</h3>
+        <p>GNOME 3.10 por defecto, con la nueva <strong>header bar</strong> que colapsa el título y la barra de herramientas en un solo elemento. KDE Plasma 4.11, Xfce 4.10, Cinnamon 2.0 y Enlightenment 0.18 disponibles como spins alternativos. Kernel Linux 3.11.</p>
+
+        <h3>Mejora principal</h3>
+        <p>ARM (armv7hl) se convierte en <strong>arquitectura primaria</strong> junto a x86, y llega una vista previa técnica de <strong>Wayland</strong> como reemplazo futuro de X11. Nuevas apps nativas: gnome-music y gnome-maps.</p>
+
+        <h3>Impacto en el desarrollo de software</h3>
+        <ul class="chip-list">
+          <li>glibc 2.18</li>
+          <li>Ruby on Rails actualizado</li>
+          <li>Apache Hadoop</li>
+          <li>WildFly (Java EE)</li>
+          <li>virt-manager con snapshots</li>
+        </ul>
+        <p>El soporte de caché SSD (Bcache / dm-cache) y la gestión de instantáneas de máquinas virtuales facilitan montar entornos de prueba reproducibles, algo clave para equipos que ya trabajaban con integración continua.</p>
+
+        <h3>Cambio en la experiencia de usuario</h3>
+        <p>Un nuevo instalador gráfico de aplicaciones reemplaza los frontends de gnome-packagekit, reduciendo la dependencia de la terminal para tareas cotidianas. La versión se dedicó a Seth Vidal, creador de YUM, en reconocimiento a su legado.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- PANEL FEDORA 40 -->
+  <article class="panel panel--v40" id="panel-v40" role="tabpanel" aria-labelledby="tab-v40" hidden>
+    <div class="panel__grid">
+      <div class="panel__visual">
+        <div class="mockwin mockwin--v40" aria-hidden="true">
+          <div class="mockwin__bar mockwin__bar--v40">
+            <span class="mockwin__dot"></span>
+            <span class="mockwin__search">Buscar en todo el sistema…</span>
+          </div>
+          <div class="mockwin__body mockwin__body--v40">
+            <div class="mockwin__card">Archivos</div>
+            <div class="mockwin__card">Configuración</div>
+            <div class="mockwin__card">Software</div>
+            <div class="mockwin__card mockwin__card--accent">Terminal + Podman</div>
+          </div>
+        </div>
+        <figcaption class="panel__caption">Recreación de GNOME 46: búsqueda global, notificaciones agrupadas y ajustes reorganizados.</figcaption>
+      </div>
+
+      <div class="panel__info">
+        <div class="version-meta">
+          <span class="version-meta__year">2024</span>
+          <span class="version-meta__date">23 de abril de 2024</span>
+        </div>
+        <h3>Interfaz gráfica</h3>
+        <p>GNOME 46 sobre Kernel Linux 6.8. La búsqueda global mejora en el gestor de archivos Nautilus, el sistema de notificaciones se agrupa por app y el panel de Ajustes queda reorganizado con un nuevo menú «Sistema».</p>
+
+        <h3>Mejora principal</h3>
+        <p><strong>RPM + DNF</strong> resuelven dependencias externas automáticamente, con soporte para actualizaciones delta y Flatpak, además de repositorios de terceros como RPM Fusion. Las instalaciones son más automatizadas y con menos fricción que en 2003.</p>
+
+        <h3>Herramientas para desarrolladores</h3>
+        <ul class="chip-list">
+          <li>OpenJDK 21</li>
+          <li>Go 1.22</li>
+          <li>LLVM 18.1</li>
+          <li>GCC 14</li>
+          <li>Python 3.12</li>
+          <li>PyTorch (por primera vez empaquetado)</li>
+        </ul>
+        <p>Soporte de primera clase para frameworks de IA y contenedores con <strong>Podman</strong>, facilitando la distribución y actualización de aplicaciones sin depender de una única herramienta.</p>
+
+        <h3>Seguridad</h3>
+        <p>Mejoras en <strong>SELinux</strong> integradas con systemd y configuraciones orientadas a proteger el sistema por defecto, en contraste con los mecanismos básicos de permisos de usuario y grupo de las primeras versiones.</p>
+
+        <h3>Compatibilidad y experiencia de usuario</h3>
+        <p>Compatible con hardware moderno (GPU, dispositivos inalámbricos, CPUs actuales). Requisitos mínimos: procesador de 2 núcleos, 2 GB de RAM y 15 GB de almacenamiento. Instalaciones gráficas, tiendas de software y configuración automatizada reemplazan buena parte del trabajo manual que exigía Fedora 1.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ===================== COMPARATIVA ===================== -->
+<section class="section compare" id="comparativa">
+  <div class="section__head">
+    <p class="eyebrow">Cuadro comparativo</p>
+    <h2 class="section__title">Fedora 1 vs. Fedora 20 vs. Fedora 40</h2>
+    <p class="section__desc">Las mismas siete categorías, medidas 21 años aparte.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th class="th-category">Categoría</th>
+          <th class="th-v1">Fedora 1 <span>2003</span></th>
+          <th class="th-v20">Fedora 20 <span>2013</span></th>
+          <th class="th-v40">Fedora 40 <span>2024</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Interfaz gráfica</td>
+          <td>GNOME 2.4 / KDE 3.1, simple, sobre RHEL 3.</td>
+          <td>GNOME 3.10 con header bar; KDE 4.11, Xfce, Cinnamon.</td>
+          <td>GNOME 46 sobre Kernel 6.8; búsqueda global y notificaciones agrupadas.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Instalación de aplicaciones</td>
+          <td>RPM + YUM manual, sin resolución automática confiable.</td>
+          <td>YUM maduro; nuevo instalador gráfico de apps.</td>
+          <td>RPM + DNF con dependencias automáticas, deltas y Flatpak.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Herramientas para desarrolladores</td>
+          <td>GCC, sin gestores modernos de paquetes ni contenedores.</td>
+          <td>glibc 2.18, Rails, Hadoop, WildFly, snapshots de VM.</td>
+          <td>OpenJDK 21, Go 1.22, LLVM 18, GCC 14, Python 3.12, PyTorch.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Seguridad</td>
+          <td>Permisos básicos de usuario/grupo, poco integrados.</td>
+          <td>SELinux más presente; primeras integraciones con systemd.</td>
+          <td>SELinux + systemd hardening; configuraciones seguras por defecto.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Compatibilidad de hardware</td>
+          <td>Pentium, 192 MB RAM, 1.6 GB disco.</td>
+          <td>ARM se vuelve arquitectura primaria junto a x86.</td>
+          <td>2 núcleos, 2 GB RAM, 15 GB disco; GPUs y wireless modernos.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Experiencia de usuario</td>
+          <td>Requiere conocimientos técnicos para casi todo.</td>
+          <td>Instalador gráfico de apps reduce el uso de terminal.</td>
+          <td>Tiendas de software, actualizaciones y configuración automatizadas.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Crear / ejecutar software</td>
+          <td>Compilación manual, terminal y RPM sin automatización.</td>
+          <td>DNF más flexible; entornos de VM reproducibles.</td>
+          <td>DNF + Flatpak + contenedores Podman; instalación directa de PyTorch.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== VISTA PREVIA LÍNEA DE TIEMPO ===================== -->
+<section class="section timeline-preview" id="timeline-preview">
+  <div class="section__head">
+    <p class="eyebrow">Exploración interactiva</p>
+    <h2 class="section__title">21 años en una mirada</h2>
+    <p class="section__desc">
+      Desde los primeros pasos de Yarrow hasta la plataforma moderna de Fedora 40.
+      Haz clic en cualquier hito para abrir la línea de tiempo completa.
+    </p>
+  </div>
+
+  <div class="preview-grid">
+    <a href="linea_de_tiempo.html" class="preview-card preview-card--v1">
+      <span class="preview-year">2003</span>
+      <h3>Fedora 1 <em>"Yarrow"</em></h3>
+      <p>El inicio con YUM, GNOME 2.4 y el cambio de paradigma en la gestión de paquetes.</p>
+    </a>
+
+    <a href="linea_de_tiempo.html" class="preview-card preview-card--v20">
+      <span class="preview-year">2013</span>
+      <h3>Fedora 20 <em>"Heisenbug"</em></h3>
+      <p>ARM como arquitectura primaria, Wayland preview y la revolución de GNOME 3.10.</p>
+    </a>
+
+    <a href="linea_de_tiempo.html" class="preview-card preview-card--v40">
+      <span class="preview-year">2024</span>
+      <h3>Fedora 40</h3>
+      <p>IA, contenedores Podman, PyTorch empaquetado y GNOME 46 en el kernel 6.8.</p>
+    </a>
+  </div>
+
+  <div class="preview-cta">
+    <a href="linea_de_tiempo.html" class="btn btn--primary">
+      Explorar línea de tiempo completa <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================== LÍNEA DE TIEMPO ===================== -->
+<section class="section timeline-section" id="linea-tiempo">
+  <div class="section__head">
+    <p class="eyebrow">Actividad 2 · Muéstrame tu historia</p>
+    <h2 class="section__title">Qué cambió, y por qué le importó al desarrollador</h2>
+    <p class="section__desc">
+      No es solo una cronología: cada punto explica qué se transformó técnicamente
+      y qué consecuencia tuvo para quien construye software sobre Fedora.
+    </p>
+  </div>
+
+  <div class="timeline" id="timeline">
+    <div class="timeline__track" aria-hidden="true"></div>
+    <div class="timeline__fill" id="timelineFill" aria-hidden="true"></div>
+
+    <div class="tl-item tl-item--v1" data-node="v1">
+      <button class="tl-node" aria-expanded="false" aria-controls="tl-card-v1">
+        <span class="tl-node__logo">
+          <svg viewBox="0 0 48 48" width="26" height="26"><path d="M24 8 A16 16 0 0 1 24 40" fill="none" stroke="#fff" stroke-width="3"/><circle cx="24" cy="24" r="4" fill="#fff"/></svg>
+        </span>
+      </button>
+      <span class="tl-year">2003</span>
+      <div class="tl-card" id="tl-card-v1">
+        <h3>Fedora 1 <em>"Yarrow"</em></h3>
+        <dl>
+          <dt>Mejora principal</dt>
+          <dd>Llegada de YUM con resolución automática de dependencias y de NPTL para hilos nativos.</dd>
+          <dt>Impacto en el desarrollo</dt>
+          <dd>Por primera vez instalar y actualizar bibliotecas dejó de ser una cadena manual de dependencias rotas; los programas multihilo ganaron rendimiento real.</dd>
+          <dt>Cambio en la experiencia de usuario</dt>
+          <dd>Interfaz GNOME 2.4 / KDE 3.1 mínima: funcional, pero exigía conocimiento técnico para casi cualquier tarea de configuración.</dd>
+        </dl>
+        <p class="tl-why">
+          <strong>¿Por qué importó?</strong> Sentó el patrón que Fedora seguiría 21 años:
+          un gestor de paquetes centralizado como eje de todo el ecosistema de desarrollo.
+        </p>
+        <a class="tl-more" href="fedora1.html">Ver ficha completa →</a>
+      </div>
+    </div>
+
+    <div class="tl-item tl-item--v20" data-node="v20">
+      <button class="tl-node" aria-expanded="false" aria-controls="tl-card-v20">
+        <span class="tl-node__logo">
+          <svg viewBox="0 0 48 48" width="26" height="26"><path d="M24 8 A16 16 0 0 1 24 40" fill="none" stroke="#fff" stroke-width="3"/><circle cx="24" cy="24" r="4" fill="#fff"/></svg>
+        </span>
+      </button>
+      <span class="tl-year">2013</span>
+      <div class="tl-card" id="tl-card-v20">
+        <h3>Fedora 20 <em>"Heisenbug"</em></h3>
+        <dl>
+          <dt>Mejora principal</dt>
+          <dd>ARM pasa a ser arquitectura primaria y aparece la primera vista previa de Wayland junto a la header bar de GNOME 3.10.</dd>
+          <dt>Impacto en el desarrollo</dt>
+          <dd>Los desarrolladores ganan objetivos de despliegue reales en dispositivos ARM, snapshots de VM para probar cambios sin miedo, y actualizaciones de Rails, Hadoop y WildFly listas para producción web y de datos.</dd>
+          <dt>Cambio en la experiencia de usuario</dt>
+          <dd>La header bar fusiona título y barra de herramientas; un nuevo instalador gráfico de apps reduce la dependencia de la terminal para el usuario final.</dd>
+        </dl>
+        <p class="tl-why">
+          <strong>¿Por qué importó?</strong> Marcó el giro de Fedora hacia la nube y los dispositivos
+          móviles, además del punto en que "instalar software" empezó a dejar de ser sinónimo de terminal.
+        </p>
+      </div>
+    </div>
+
+    <div class="tl-item tl-item--v40" data-node="v40">
+      <button class="tl-node" aria-expanded="false" aria-controls="tl-card-v40">
+        <span class="tl-node__logo">
+          <svg viewBox="0 0 48 48" width="26" height="26"><path d="M24 8 A16 16 0 0 1 24 40" fill="none" stroke="#fff" stroke-width="3"/><circle cx="24" cy="24" r="4" fill="#fff"/></svg>
+        </span>
+      </button>
+      <span class="tl-year">2024</span>
+      <div class="tl-card" id="tl-card-v40">
+        <h3>Fedora 40</h3>
+        <dl>
+          <dt>Mejora principal</dt>
+          <dd>RPM + DNF resuelven dependencias externas automáticamente, con Flatpak, actualizaciones delta y repositorios de terceros como RPM Fusion integrados de forma fluida.</dd>
+          <dt>Impacto en el desarrollo</dt>
+          <dd>Soporte directo para OpenJDK 21, Go 1.22, LLVM 18, Python 3.12 y, por primera vez, PyTorch empaquetado oficialmente; Podman facilita distribuir software en contenedores sin fricción.</dd>
+          <dt>Cambio en la experiencia de usuario</dt>
+          <dd>Búsqueda global en archivos, notificaciones agrupadas por app y un panel de Ajustes reorganizado hacen que configurar el sistema ya no requiera conocimientos técnicos previos.</dd>
+        </dl>
+        <p class="tl-why">
+          <strong>¿Por qué importó?</strong> Consolidó a Fedora como una plataforma lista para IA y
+          contenedores desde el primer arranque, cerrando la brecha entre "instalar un sistema" y
+          "tener un entorno de desarrollo completo".
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Plantilla interactiva de la evolución de Fedora Linux — Actividad 1 (cuadro comparativo) y Actividad 2 (línea de tiempo).</p>
+  <p class="footer__sources">Fuentes: documentación oficial de Fedora Project, BetaWiki, Fedora Magazine y Red Hat.</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

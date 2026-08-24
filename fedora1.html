@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fedora Core 1 "Yarrow" · Ficha a fondo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/fedora1.css">
+</head>
+<body>
+
+<!-- ===================== NAV (igual que index.html) ===================== -->
+<header class="topnav">
+  <div class="topnav__inner">
+    <a href="index.html#inicio" class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="28" height="28">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.4" opacity="0.35"/>
+          <path d="M24 8 A16 16 0 0 1 24 40" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="24" cy="24" r="5" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand__text">fedora<span class="brand__dim">.evolución</span></span>
+    </a>
+    <nav class="topnav__links">
+      <a href="index.html#versiones">Versiones</a>
+      <a href="index.html#comparativa">Comparativa</a>
+      <a href="index.html#linea-tiempo">Línea de tiempo</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== SUBNAV: volver ===================== -->
+<div class="subnav">
+  <div class="subnav__inner">
+    <a href="index.html#versiones" class="back-link">&larr; Volver a las versiones</a>
+    <span class="subnav__tag">Ficha 01 / 03</span>
+  </div>
+</div>
+
+<!-- ===================== HERO DE LA FICHA ===================== -->
+<section class="f1-hero">
+  <div class="f1-hero__bg" aria-hidden="true"></div>
+  <div class="f1-hero__logo" aria-hidden="true">
+    <img src="assets/logoF.png" alt="" width="120" height="120">
+  </div>
+  <div class="f1-hero__inner reveal-on-load">
+    <p class="eyebrow eyebrow--terminal"><span class="eyebrow__prompt">$</span> cat /etc/fedora-release</p>
+    <h1 class="f1-hero__title">Fedora Core 1 <em>"Yarrow"</em></h1>
+
+    <div class="f1-hero__meta">
+      <span><b>Lanzamiento:</b> 6 de noviembre de 2003</span>
+      <span><b>EOL:</b> 20 de septiembre de 2004</span>
+      <span><b>Legacy hasta:</b> agosto de 2006</span>
+    </div>
+
+    <p class="f1-hero__lede">
+      La primera versión de Fedora tras la reorganización de Red Hat en 2003. No fue solo
+      un cambio de nombre: introdujo el gestor de paquetes que definiría la distribución
+      durante dos décadas y sentó las bases de seguridad que Fedora sigue refinando hoy.
+    </p>
+
+    <div class="f1-stats">
+      <div class="f1-stat"><div class="f1-stat__label">Kernel</div><div class="f1-stat__value">Linux 2.4.19</div></div>
+      <div class="f1-stat"><div class="f1-stat__label">Escritorio</div><div class="f1-stat__value">GNOME 2.4 / KDE 3.1</div></div>
+      <div class="f1-stat"><div class="f1-stat__label">Paquetes</div><div class="f1-stat__value">RPM + YUM</div></div>
+      <div class="f1-stat"><div class="f1-stat__label">Arquitectura</div><div class="f1-stat__value">i386 (AMD64 en 2004)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INNOVACIONES ===================== -->
+<section class="section" id="innovaciones">
+  <div class="section__head">
+    <p class="eyebrow"><span class="f1-section__num">01</span>Lo que importó</p>
+    <h2 class="section__title">Las novedades que dejaron huella</h2>
+    <p class="section__desc">
+      De la larga lista de cambios técnicos de FC1, estos son los que tuvieron efecto
+      directo y duradero sobre cómo se instalaba, ejecutaba y aseguraba software.
+    </p>
+  </div>
+
+  <div class="f1-cards">
+    <div class="f1-card">
+      <p class="f1-card__title"><span class="dot"></span>YUM reemplaza la gestión manual de RPM</p>
+      <p>Primer gestor de paquetes de Fedora con resolución automática de dependencias.
+      Antes de esto, instalar un paquete significaba perseguir a mano cada dependencia rota.</p>
+    </div>
+    <div class="f1-card">
+      <p class="f1-card__title"><span class="dot"></span>NPTL: hilos nativos de verdad</p>
+      <p>La nueva Native POSIX Thread Library mejoró el rendimiento y la escalabilidad frente
+      a LinuxThreads. Algunas apps antiguas (Sun JRE, IBM JRE) necesitaban forzar el modo
+      anterior con <code>LD_ASSUME_KERNEL=2.4.19</code>.</p>
+    </div>
+    <div class="f1-card">
+      <p class="f1-card__title"><span class="dot"></span>Exec-shield y PIE</p>
+      <p>Memoria no ejecutable por defecto y ejecutables independientes de posición: los
+      primeros pasos serios de Fedora hacia mitigar exploits mediante aleatorización de
+      memoria, mucho antes de que fuera un estándar de la industria.</p>
+    </div>
+    <div class="f1-card">
+      <p class="f1-card__title"><span class="dot"></span>Arranque gráfico y tema Bluecurve</p>
+      <p>RHGB mostraba una barra de progreso en el arranque en vez de texto crudo, y el
+      tema Bluecurve de Red Hat unificaba GNOME y KDE con la misma paleta azul y grises.</p>
+    </div>
+    <div class="f1-card">
+      <p class="f1-card__title"><span class="dot"></span>Migración completa a UTF-8</p>
+      <p>El sistema pasó de codificaciones legacy tipo Latin-1 a UTF-8 como estándar,
+      aunque esto generó fricciones al conectar por Telnet/SSH con sistemas más antiguos.</p>
+    </div>
+    <div class="f1-card">
+      <p class="f1-card__title"><span class="dot"></span>D-Bus hace su debut</p>
+      <p>El sistema de mensajería entre procesos que hoy es estándar en todo Linux
+      de escritorio apareció por primera vez aquí.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HERRAMIENTAS DE DESARROLLO ===================== -->
+<section class="section" id="dev" style="padding-top:0">
+  <div class="section__head">
+    <p class="eyebrow"><span class="f1-section__num">02</span>Ecosistema</p>
+    <h2 class="section__title">Con qué se construía software</h2>
+    <p class="section__desc">
+      Sin gestores de paquetes por lenguaje, sin contenedores, sin entornos virtuales
+      estandarizados. Todo pasaba por el compilador, la terminal y RPM.
+    </p>
+  </div>
+  <ul class="chip-list">
+    <li>GCC 3.2 / 3.3</li>
+    <li>Python 2.3</li>
+    <li>Perl 5.8</li>
+    <li>Ruby 1.8</li>
+    <li>PHP 4.3</li>
+    <li>GNU Make / Automake</li>
+    <li>GTK+ 2.x</li>
+    <li>Qt 3.x</li>
+    <li>CVS</li>
+    <li>GDB</li>
+    <li>Apache 2.0</li>
+    <li>MySQL / PostgreSQL</li>
+  </ul>
+</section>
+
+<!-- ===================== APPS ===================== -->
+<section class="section" id="apps" style="padding-top:0">
+  <div class="section__head">
+    <p class="eyebrow"><span class="f1-section__num">03</span>Fuera de la caja</p>
+    <h2 class="section__title">Lo que traía instalado</h2>
+  </div>
+  <div class="f1-apps">
+    <div class="f1-app"><div class="f1-app__name">OpenOffice.org 1.1.0</div><div class="f1-app__role">Suite ofimática</div></div>
+    <div class="f1-app"><div class="f1-app__name">Mozilla Suite 1.4.1</div><div class="f1-app__role">Navegador + correo</div></div>
+    <div class="f1-app"><div class="f1-app__name">Ximian Evolution 1.4</div><div class="f1-app__role">Correo y agenda</div></div>
+    <div class="f1-app"><div class="f1-app__name">Rhythmbox 0.5.3</div><div class="f1-app__role">Reproductor de música</div></div>
+    <div class="f1-app"><div class="f1-app__name">GAIM</div><div class="f1-app__role">Mensajería instantánea</div></div>
+    <div class="f1-app"><div class="f1-app__name">Samba 3.0</div><div class="f1-app__role">Compartir con Windows</div></div>
+  </div>
+</section>
+
+<!-- ===================== LIMITACIONES ===================== -->
+<section class="section" id="limitaciones" style="padding-top:0">
+  <div class="section__head">
+    <p class="eyebrow"><span class="f1-section__num">04</span>El otro lado</p>
+    <h2 class="section__title">Dónde se quedaba corta</h2>
+    <p class="section__desc">Las limitaciones más relevantes, agrupadas. Toca cada una para ver el detalle.</p>
+  </div>
+
+  <div class="f1-limits" id="limitsAccordion">
+    <div class="f1-limit">
+      <button class="f1-limit__q" aria-expanded="false">
+        Sin SELinux <span class="tag">seguridad</span><span class="f1-limit__icon"></span>
+      </button>
+      <div class="f1-limit__a"><div class="f1-limit__a-inner">
+        Solo permisos tradicionales de Unix (usuario/grupo/otros). No existía control de
+        acceso obligatorio: un servicio comprometido podía acceder a todo lo que su usuario
+        tuviera permitido. SELinux llegaría hasta Fedora Core 2.
+      </div></div>
+    </div>
+
+    <div class="f1-limit">
+      <button class="f1-limit__q" aria-expanded="false">
+        Kernel 2.4, no 2.6 <span class="tag">rendimiento</span><span class="f1-limit__icon"></span>
+      </button>
+      <div class="f1-limit__a"><div class="f1-limit__a-inner">
+        FC1 usaba el kernel 2.4.19. El 2.6 —con mejor escalabilidad SMP, gestión de memoria
+        y scheduler— salió apenas un mes después, en diciembre de 2003, y no llegaría a
+        Fedora hasta la versión 2.
+      </div></div>
+    </div>
+
+    <div class="f1-limit">
+      <button class="f1-limit__q" aria-expanded="false">
+        Multimedia restringida por patentes <span class="tag">software</span><span class="f1-limit__icon"></span>
+      </button>
+      <div class="f1-limit__a"><div class="f1-limit__a-inner">
+        Ni MP3 ni DVD funcionaban de fábrica por las patentes vigentes en EE. UU. Había que
+        instalar códecs manualmente desde repositorios de terceros como Livna.org o FreshRPMS.
+      </div></div>
+    </div>
+
+    <div class="f1-limit">
+      <button class="f1-limit__q" aria-expanded="false">
+        ACPI apagado por defecto <span class="tag">hardware</span><span class="f1-limit__icon"></span>
+      </button>
+      <div class="f1-limit__a"><div class="f1-limit__a-inner">
+        Aunque el kernel lo soportaba, había que activarlo a mano con el parámetro de arranque
+        <code>acpi=on</code>. En portátiles nuevos con BIOS solo-ACPI, esto significaba no ver
+        el nivel de batería sin configuración manual.
+      </div></div>
+    </div>
+
+    <div class="f1-limit">
+      <button class="f1-limit__q" aria-expanded="false">
+        XFree86 en vez de X.Org <span class="tag">gráficos</span><span class="f1-limit__icon"></span>
+      </button>
+      <div class="f1-limit__a"><div class="f1-limit__a-inner">
+        El servidor gráfico todavía era XFree86. Un cambio de licencia incompatible con la
+        filosofía de Fedora forzó la migración a X.Org Server en la siguiente versión.
+      </div></div>
+    </div>
+
+    <div class="f1-limit">
+      <button class="f1-limit__q" aria-expanded="false">
+        Solo 32-bit al inicio, ciclo de vida corto <span class="tag">soporte</span><span class="f1-limit__icon"></span>
+      </button>
+      <div class="f1-limit__a"><div class="f1-limit__a-inner">
+        <ul>
+          <li>La versión de 64-bit (AMD64) no llegó hasta marzo de 2004.</li>
+          <li>Fin de soporte oficial menos de un año después del lanzamiento (sept. 2004).</li>
+          <li>Sin herramientas gráficas de gestión de paquetes (pirut/pup llegarían hasta FC5).</li>
+        </ul>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== POR QUÉ IMPORTÓ ===================== -->
+<section class="section" style="padding-top:0; padding-bottom: 96px;">
+  <div class="f1-closer">
+    <h3>¿Por qué importó?</h3>
+    <p>
+      Fedora Core 1 sentó el patrón que la distribución seguiría durante 21 años: un
+      gestor de paquetes centralizado como eje del ecosistema, y una postura de seguridad
+      que empezaba modesta —solo permisos de Unix— pero ya apuntaba, con Exec-shield y PIE,
+      hacia lo que después sería SELinux.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Ficha 01 de 03 · <a class="f1-footlink" href="index.html#versiones">Ver Fedora 20 y Fedora 40 →</a></p>
+  <p class="footer__sources">Fuentes: documentación oficial de Fedora Project, BetaWiki, Fedora Magazine y Red Hat.</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
